@@ -1,0 +1,67 @@
+package uniwa.university.quizapp.activities;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.widget.Button;
+import android.widget.TextView;
+import android.os.Bundle;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import uniwa.university.quizapp.R;
+import uniwa.university.quizapp.model.Student;
+
+
+public class MainActivity extends AppCompatActivity {
+
+    private TextView studentsTextView;
+    private Button continueButton;
+    private List<Student> students;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        studentsTextView = findViewById(R.id.studentsTextView);
+        continueButton = findViewById(R.id.continueButton);
+
+        loadStudents();
+        displayStudents();
+
+        continueButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, StudentInfoActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void loadStudents() {
+        students = new ArrayList<>();
+
+        // ΤΩΡΑ: ένας φοιτητής
+        students.add(
+                new Student(
+                        "Παπαευθυμίου Εμμανουήλ",
+                        "mscict24059"
+                )
+        );
+
+        // ΑΥΡΙΟ: απλά προσθέτεις κι άλλους
+        // students.add(new Student("Όνομα", "ΑΜ"));
+    }
+
+    private void displayStudents() {
+        StringBuilder builder = new StringBuilder();
+
+        for (Student student : students) {
+            builder.append(student.getFullName())
+                    .append("\nΑΜ: ")
+                    .append(student.getRegistrationNumber())
+                    .append("\n\n");
+        }
+
+        studentsTextView.setText(builder.toString());
+    }
+}
