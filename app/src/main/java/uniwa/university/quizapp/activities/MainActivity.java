@@ -48,7 +48,20 @@ public class MainActivity extends AppCompatActivity {
                 )
         );
 
-        // students.add(new Student("Όνομα", "ΑΜ"));
+        students.add(
+                new Student(
+                        "Γραμματικού Σωτηρία",
+                        "mscict24015"
+                )
+        );
+
+        students.add(
+                new Student(
+                        "Κακούρης Νικόλαος",
+                        "mscict24029"
+                )
+        );
+
     }
 
     private void displayStudents() {
