@@ -3,6 +3,7 @@ package uniwa.university.quizapp.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.widget.Button;
 import android.widget.TextView;
 import android.os.Bundle;
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     private void loadStudents() {
         students = new ArrayList<>();
 
-        // ΤΩΡΑ: ένας φοιτητής
         students.add(
                 new Student(
                         "Παπαευθυμίου Εμμανουήλ",
@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
                 )
         );
 
-        // ΑΥΡΙΟ: απλά προσθέτεις κι άλλους
         // students.add(new Student("Όνομα", "ΑΜ"));
     }
 
@@ -63,5 +62,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         studentsTextView.setText(builder.toString());
+
+        SharedPreferences prefs =
+                getSharedPreferences("quiz_results", MODE_PRIVATE);
+
+        if (prefs.contains("last_name")) {
+            String lastResult =
+                    "\nΤελευταίο Αποτέλεσμα:\n" +
+                            prefs.getString("last_name", "") + "\n" +
+                            prefs.getInt("last_percentage", 0) + "%\n" +
+                            prefs.getString("last_time", "");
+
+            studentsTextView.append(lastResult);
+        }
     }
+
 }

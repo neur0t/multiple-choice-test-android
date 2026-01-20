@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -22,6 +23,8 @@ public class QuizActivity extends AppCompatActivity {
     private TextView questionTextView;
     private RadioGroup answersRadioGroup;
     private Button nextButton;
+    private ProgressBar quizProgressBar;
+
 
 
     private List<Question> questions;
@@ -37,10 +40,14 @@ public class QuizActivity extends AppCompatActivity {
         answersRadioGroup = findViewById(R.id.answersRadioGroup);
         nextButton = findViewById(R.id.nextButton);
         questionImageView = findViewById(R.id.questionImageView);
+        quizProgressBar = findViewById(R.id.quizProgressBar);
+
 
         questions = QuestionRepository.getInstance().getRandomQuestions(
                 Math.min(10, QuestionRepository.getInstance().getAllQuestionsCount())
         );
+
+        quizProgressBar.setMax(questions.size());
 
         showQuestion();
 
@@ -48,6 +55,8 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void showQuestion() {
+        quizProgressBar.setProgress(currentIndex + 1);
+
         answersRadioGroup.removeAllViews();
 
         Question q = questions.get(currentIndex);
